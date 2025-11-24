@@ -1,6 +1,0 @@
-[submodule "hestia-frontend"]
-	path = hestia-frontend
-	url = https://github.com/ArturMota19/hestia-frontend
-[submodule "hestia-backend"]
-	path = hestia-backend
-	url = https://github.com/ArturMota19/hestia-backend
