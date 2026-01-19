@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: hestia-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=hestia
+      - PORT=3000
+      - JWT_SECRET=docker123
+      - ADMIN_NAME=AdminDocker
+      - ADMIN_EMAIL=admin@hestia.com
+      - ADMIN_PASSWORD=admin
+    networks:
+      - hestia-network
+  db:
+    image: mysql:8.0
+    container_name: hestia-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hestia
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - hestia-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+volumes:
+  db_data:
+
+networks:
+  hestia-network:
+    driver: bridge
