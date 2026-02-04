@@ -12,14 +12,14 @@ Este repositório contém o back-end da aplicação HESTIA 2.0. O **HESTIA 2.0**
 
 ### ⚙️ Requisitos
 
+- Docker e Docker Compose instalados
 - Node.js instalado (versão 16+ recomendada)
-- MySQL e SGBDR (opcional, mas recomendado)
 - Python/Pip
 - [Repositório do front-end clonado](https://github.com/ArturMota19/hestia-frontend)
 
 ---
 
-### 🛠️ Instalação
+### 🛠️ Instalação com Docker Compose
 
 1. Clone o repositório:
    ```bash
@@ -27,62 +27,44 @@ Este repositório contém o back-end da aplicação HESTIA 2.0. O **HESTIA 2.0**
    cd hestia-backend
    ```
 
-2. Instale as dependências
-   ```bash
-   npm install
+2. Crie o .env na raiz do projeto:
    ```
-
-2.1. Instale as dependências do simulador
-   ```bash
-   cd hestia-sim
-   pip install .
-   ```
-
-3. Crie o .env na raiz do projeto:
-   ```
-    #DB Connection
     DB_NAME=hestia
     DB_USER=root
-    DB_PASSWORD=""
-    DB_HOST=localhost
+    DB_PASSWORD=password
+    DB_HOST=mysql
     PORT=3000
     JWT_SECRET="StringAleatoria"
-
-    #User admin
     ADMIN_NAME="nome"
     ADMIN_EMAIL="email@email.com"
     ADMIN_PASSWORD="senha"
    ```
 
-4. Banco de Dados:
-    > 4.1: Crie uma database chamada "hestia" (igual ao .env)  
-    > 4.2: Ajuste o .env com base nas suas configurações de banco (user, password, host...)
-
-5. Inicie o servidor:
+3. Inicie os serviços:
    ```bash
-   node index.js
+   docker-compose up -d
    ```
 
-  ---
+---
 
-  ## 🇺🇸 Documentation - English
+## 🇺🇸 Documentation - English
 
-  ### 📌 Overview
+### 📌 Overview
 
-  This repository contains the back-end of the HESTIA 2.0 application. The **HESTIA 2.0** was developed to facilitate the **creation of test cases** for the original HESTIA system. Due to the large volume of data involved, this process became challenging. This project aims to **simplify and speed up** this step, allowing the generation of representative examples in a more efficient and accessible way.
+This repository contains the back-end of the HESTIA 2.0 application. The **HESTIA 2.0** was developed to facilitate the **creation of test cases** for the original HESTIA system. Due to the large volume of data involved, this process became challenging. This project aims to **simplify and speed up** this step, allowing the generation of representative examples in a more efficient and accessible way.
 
-  ---
+---
 
-  ### ⚙️ Requirements
+### ⚙️ Requirements
 
-  - Node.js installed (version 16+ recommended)
-  - MySQL and RDBMS (optional, but recommended)
-  - Python/Pip
-  - [Front-end repository cloned](https://github.com/ArturMota19/hestia-frontend)
+- Docker and Docker Compose installed
+- Node.js installed (version 16+ recommended)
+- Python/Pip
+- [Front-end repository cloned](https://github.com/ArturMota19/hestia-frontend)
 
-  ---
+---
 
-  ### 🛠️ Installation
+### 🛠️ Installation with Docker Compose
 
 1. Clone the repository:
     ```bash
@@ -90,38 +72,20 @@ Este repositório contém o back-end da aplicação HESTIA 2.0. O **HESTIA 2.0**
     cd hestia-backend
     ```
 
-2. Install dependencies:
-    ```bash
-    npm install
+2. Create the .env file at the project root:
     ```
-
-2.1. Install simulator dependencies:
-   ```bash
-   cd hestia-sim
-   pip install .
-   ```
-
-3. Create the .env file at the project root:
-    ```
-     #DB Connection
      DB_NAME=hestia
      DB_USER=root
-     DB_PASSWORD=""
-     DB_HOST=localhost
+     DB_PASSWORD=password
+     DB_HOST=mysql
      PORT=3000
      JWT_SECRET="RandomString"
-
-     #User admin
      ADMIN_NAME="name"
      ADMIN_EMAIL="email@email.com"
      ADMIN_PASSWORD="password"
     ```
 
-4. Database:
-     > 4.1: Create a database named "hestia" (same as in .env)  
-     > 4.2: Adjust the .env file according to your database settings (user, password, host...)
-
-5. Start the server:
+3. Start the services:
     ```bash
-    node index.js
+    docker-compose up -d
     ```
