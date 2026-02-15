@@ -79,14 +79,14 @@ export async function BaseRequest({
         toast.error("Este preset não pode ser editado porque está sendo utilizado em uma rotina existente.")
       }
       else {
+              if (url && url.includes("updateRoutineActivities")) {
+        return;
+      }
         toast.error("Houve um erro. Consulte as informações enviadas e tente novamente.",{
           toastId: "genericError",
         });
       }
     } else {
-      if (url && url.includes("updateRoutineActivities")) {
-        return;
-      }
       // Something happened in setting up the request that triggered an Error
       toast.error("Algum erro ocorreu e não pôde ser tratado.",{
         toastId: "unhandledError",
