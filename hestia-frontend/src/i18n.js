@@ -243,6 +243,8 @@ const resources = {
                 "Após ter criado o preset e as atividades relacionadas àquele preset, vá em criar rotinas, adicione uma ou mais pessoas e construa a rotina da pessoa. Perceba que cada rotina deve completar 24h diárias.",
             // final adjustments
             searchPlaceholder: "Buscar...",
+            tipsOn: "Dicas Ativadas",
+            tipsOff: "Dicas Desativadas",
             // toast messages
             toastMessage1: "Pessoa criada com sucesso.",
             toastMessage2: "Cômodo criado com sucesso.",
@@ -279,6 +281,12 @@ const resources = {
             toastMessage33: "Preset editado com sucesso",
             toastMessage34: "Não é possível remover o cômodo, pois ele está associado a um grafo.",
             toastMessage35: "A pessoa {{personName}} já possui uma rotina cadastrada.",
+            // Tips
+            tip1: "Pessoas são parâmetros GERAIS, criadas para serem utilizadas em diversas Rotinas.",
+            tip2: "Atividades são parâmetros GERAIS, criadas para serem utilizadas em diversas Atividades com Preset.",
+            tip3: "Cômodos são parâmetros GERAIS, criados para serem utilizados em diversos Presets.",
+            tip4: "Não é possível criar ou editar atuadores, pois são elementos criados automaticamente pelo simulador HESTIA.",
+            tip5: "Atividades com Preset são parâmetros ESPECÍFICOS, criados para serem utilizados ESPECIFICAMENTE naquele Preset.",
         },
     },
     en: {
@@ -514,6 +522,8 @@ const resources = {
                 "After creating the preset and the activities related to that preset, go to create routines, add one or more people, and build the person's routine. Note that each routine must complete 24 hours per day.",
             // final adjustments
             searchPlaceholder: "Search...",
+            tipsOn: "Tips Activated",
+            tipsOff: "Tips Disabled",
             // toast messages
             toastMessage1: "Person created successfully.",
             toastMessage2: "Room created successfully.",

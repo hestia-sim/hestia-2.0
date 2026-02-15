@@ -118,6 +118,11 @@ a {
   text-decoration: none;
 }
 
+.tips{
+  @include font-regular-2;
+  text-align: center;
+}
+
 // Language Toggle Button Styles
 .languageToggleButtonWrapper{
   position: absolute;

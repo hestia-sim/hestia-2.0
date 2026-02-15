@@ -123,6 +123,7 @@ export default function ViewParams() {
             </div>
         );
     };
+    const tipsEnabled = localStorage.getItem("tipsEnabled") === "true";
 
     return (
         <main className={s.wrapperViewParams}>
@@ -237,6 +238,24 @@ export default function ViewParams() {
                             )}
                         </div>
                     </div>
+                )}
+                {tipsEnabled && (
+                    (() => {
+                        switch (paramType) {
+                            case "people":
+                                return <p className={"tips"}>ℹ️ {t("tip1")}</p>;
+                            case "activities":
+                                return <p className={"tips"}>ℹ️ {t("tip2")}</p>;
+                            case "rooms":
+                                return <p className={"tips"}>ℹ️ {t("tip3")}</p>;
+                            case "actuators":
+                                return <p className={"tips"}>ℹ️ {t("tip4")}</p>;
+                            case "activitiesPresetParamRoutes":
+                                return <p className={"tips"}>ℹ️ {t("tip5")}</p>;
+                            default:
+                                return null;
+                        }
+                    })()
                 )}
                 <section className={s.gridWrapper}>
                     {data.length > 0 &&

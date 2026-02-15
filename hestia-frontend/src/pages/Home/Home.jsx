@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 //Styles
 import s from "./Home.module.scss";
 import LanguageToggleButton from "../../basics/LanguageToggleButton/LanguageToggleButton";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -32,8 +33,33 @@ export default function Home() {
     );
   };
 
+  const [tipsEnabled, setTipsEnabled] = useState(() => {
+    const stored = localStorage.getItem("tipsEnabled");
+    return stored === null ? true : stored === "true";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tipsEnabled", tipsEnabled);
+    window.dispatchEvent(new Event("tipsEnabledChanged"));
+  }, [tipsEnabled]);
+
+  const handleToggleTips = () => setTipsEnabled((prev) => !prev);
+
   return (
     <main className={s.wrapperHome}>
+      <div
+        style={{
+          position: "absolute",
+          top: 16,
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 10,
+        }}
+      >
+        <button className={tipsEnabled ? s.button : s.buttonDisabled} onClick={handleToggleTips}>
+          ℹ️ {tipsEnabled ? t("tipsOn", "Dicas ativadas") : t("tipsOff", "Dicas desativadas")}
+        </button>
+      </div>
       <ThemeToggleButton isHeader={false} />
       <div className={"languageToggleButtonWrapper"}>
         <LanguageToggleButton />
