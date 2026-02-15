@@ -91,11 +91,22 @@ exports.getAll = async (req, res) => {
       order: [['createdAt', 'DESC']]
     });
 
+    // Fetch preset names for each presetId
+    const presetIds = presetParamsData.map(param => param.presetId);
+    const housePresets = await HousePresets.findAll({
+      where: { id: presetIds }
+    });
+    const presetNameMap = {};
+    housePresets.forEach(preset => {
+      presetNameMap[preset.id] = preset.name;
+    });
+
     const presetParams = presetParamsData.map((param) => ({
       id: param.id,
       paramName: param.name,
       actuatorSpec: [],
       presetId: param.presetId,
+      presetName: presetNameMap[param.presetId] || null,
       activityId: param.activityId,
       activityRoom: param.activityRoom,
       type: "activityPresetParam",

@@ -7,6 +7,9 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    volumes:
+      - .:/app              # Sincroniza seu código local com o container
+      - /app/node_modules   # Evita que sua pasta local sobrescreva os pacotes do container
     depends_on:
       db:
         condition: service_healthy
@@ -22,6 +25,7 @@ services:
       - ADMIN_PASSWORD=admin
     networks:
       - hestia-network
+
   db:
     image: mysql:8.0
     container_name: hestia-db

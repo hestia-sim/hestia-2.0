@@ -7,17 +7,20 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Instala o nodemon para monitorar alterações de arquivos
+RUN npm install -g nodemon
+
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
 
 COPY hestia-sim ./hestia-sim
-
 RUN cd hestia-sim && pip3 install . --break-system-packages
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+# Alterado para usar o nodemon em vez do node direto
+CMD ["nodemon", "index.js"]
