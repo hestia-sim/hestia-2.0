@@ -75,17 +75,22 @@ export default function RoutineModal({
     });
   }
 
-  async function GetActivityRoutines() {
-    const response = await BaseRequest({
-      method: "GET",
-      isAuth: true,
-      url: `routines/getRoutine/${weekDay.dayId}`,
-      setIsLoading,
+async function GetActivityRoutines() {
+  const response = await BaseRequest({
+    method: "GET",
+    isAuth: true,
+    url: `routines/getRoutine/${weekDay.dayId}`,
+    setIsLoading,
+  });
+
+  if (response.status == 200) {
+    const stableItems = response.data.sort((a, b) => {
+      return new Date(a.createdAt || a.id) - new Date(b.createdAt || b.id);
     });
-    if (response.status == 200) {
-      setItems(response.data);
-    }
+    
+    setItems(stableItems);
   }
+}
 
   useEffect(() => {
     GetActivityRoutines();
