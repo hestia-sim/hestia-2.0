@@ -84,6 +84,9 @@ export async function BaseRequest({
         });
       }
     } else {
+      if (url && url.includes("updateRoutineActivities")) {
+        return;
+      }
       // Something happened in setting up the request that triggered an Error
       toast.error("Algum erro ocorreu e não pôde ser tratado.",{
         toastId: "unhandledError",
