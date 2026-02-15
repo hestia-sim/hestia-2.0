@@ -619,6 +619,8 @@ export default function FinalFile() {
         }
     }
 
+    const tipsEnabled = localStorage.getItem("tipsEnabled") === "true";
+
     return (
         <main className={s.wrapperFinalFile}>
             <Helmet>
@@ -628,6 +630,9 @@ export default function FinalFile() {
             <Header />
             <section className={s.hestiaInfoWrapper}>
                 <h1>{t("createFinalFile")}</h1>
+                {tipsEnabled && (
+                <p className={"tips"}>ℹ️ {t("tip9")}</p>
+                )}
                 <div className={s.wrapperInternForm}>
                     <form
                         className={s.wrapperForm}
@@ -639,6 +644,10 @@ export default function FinalFile() {
                             value={formikPresets.values.preset}
                             options={presets}
                         />
+                                        {tipsEnabled && (
+                <p className={"tips"}>ℹ️ {t("tip10")}</p>
+                )}
+                        
                         <section className={s.generateData}>
                             <p>{t("fillGenerateOnly")}</p>
                             <div className={s.wrapperInternFields}>
@@ -679,6 +688,9 @@ export default function FinalFile() {
                         </div>
                     </form>
                 </div>
+                                                {tipsEnabled && (
+                <p className={"tips"}>ℹ️ {t("tip11")}</p>
+                )}
             </section>
         </main>
     );

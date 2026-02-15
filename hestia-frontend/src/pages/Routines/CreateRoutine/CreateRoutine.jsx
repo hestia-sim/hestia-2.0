@@ -230,6 +230,7 @@ export default function CreateRoutine() {
     formikPresets.resetForm()
 
   }
+  const tipsEnabled = localStorage.getItem("tipsEnabled") === "true";
 
   return (
     <main className={s.wrapperCreateRoutine}>
@@ -250,6 +251,9 @@ export default function CreateRoutine() {
       />
       <section className={s.hestiaInfoWrapper}>
         <h1>{t("createRoutines")}</h1>
+        {tipsEnabled && (
+          <p className={"tips"}>ℹ️ {t("tip8")}</p>
+        )}
         <div className={s.wrapperInternForm}>
           <div className={s.titleRoutinesCreate}>
             <h2>{t("personsRoutines")}</h2>
