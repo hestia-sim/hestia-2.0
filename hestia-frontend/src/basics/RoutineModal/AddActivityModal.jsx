@@ -180,7 +180,7 @@ export default function AddActivityModal({
                 });
                 if (response.status == 201) {
                     toast.success(
-                        "Parâmetro para atividade preset criada com sucesso."
+                        t("toastMessage8")
                     );
                     FetchData()
                     setIsActivityModalOpen(false);
@@ -190,7 +190,7 @@ export default function AddActivityModal({
                     (item) => item.otherActivity.id === data.activity.id
                 );
                 if (hasSameId) {
-                    toast.error("Uma atividade não pode ser igual a uma outra atividade. (Principal ou Secundária)");
+                    toast.error(t("toastMessage9"));
                     return;
                 }
                 const response = await BaseRequest({
@@ -202,7 +202,7 @@ export default function AddActivityModal({
                 });
 
                 if(response.status == 200){
-                    toast.success("Parâmetro editado com sucesso.")
+                    toast.success(t("toastMessage10"))
                     FetchData()
                     setIsActivityModalOpen(false);
                 }
@@ -224,7 +224,7 @@ export default function AddActivityModal({
         onSubmit: async (values) => {
             if (values.status.length < 1) {
                 toast.error(
-                    "Adicione ao menos uma propriedade para o atuador."
+                    t("toastMessage11")
                 );
                 return;
             }
@@ -254,7 +254,7 @@ export default function AddActivityModal({
         validationSchema: validationSchemaOtherActivities,
         onSubmit: async (values) => {
             if (values.otherActivity.id == formik.values.activity.id) {
-                toast.error("Atividade já selecionada como principal.");
+                toast.error(t("toastMessage12"));
                 return;
             }
             if (
@@ -262,7 +262,7 @@ export default function AddActivityModal({
                     (a) => a.otherActivity.id === values.otherActivity.id
                 )
             ) {
-                toast.error("Esta atividade já foi adicionada.");
+                toast.error(t("toastMessage13"));
                 return;
             }
 

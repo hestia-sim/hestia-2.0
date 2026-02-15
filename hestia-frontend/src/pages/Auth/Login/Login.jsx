@@ -47,7 +47,7 @@ export default function Login() {
       })
 
       if(response.status == 200){
-        toast.success("Login efetuado com sucesso.", {
+        toast.success(t("toastMessage21"), {
           duration: 1000,
         });
         localStorage.setItem("AHtoken", response.data.token)

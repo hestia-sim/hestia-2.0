@@ -52,7 +52,7 @@ export default function Register() {
         setIsLoading,
       })
       if(response.status == 201){
-        toast.success("Conta criada com sucesso.", {
+        toast.success(t("toastMessage22"), {
           duration: 2500,
         });
         setTimeout(() => {

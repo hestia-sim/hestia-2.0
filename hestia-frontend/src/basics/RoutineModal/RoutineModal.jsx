@@ -94,11 +94,11 @@ export default function RoutineModal({
   async function RegisterRoutineActivity(){
     const totalDuration = items.reduce((sum, item) => sum + item.duration, 0);
     if (totalDuration >= 48) {
-      toast.error("A rotina já está completa. Não é possível adicionar mais atividades.");
+      toast.error(t("toastMessage14"));
       return;
     }
     if(formikActivityParam.values.activityPresetParam == "") {
-      toast.error("Selecione a atividade")
+      toast.error(t("toastMessage15"));
       return
     }
     if(items.length > 0){
@@ -119,7 +119,7 @@ export default function RoutineModal({
       setIsLoading,
     });
     if(response.status == 201){
-      toast.success("Atividade adicionada com sucesso.")
+      toast.success(t("toastMessage16"));
       formikActivityParam.resetForm()
       GetActivityRoutines()
     }
@@ -132,7 +132,7 @@ export default function RoutineModal({
       const newItem = { ...currentItem, start: newStart };
 
       if (hasOverlap(newItem, prevItems, id)) {
-        toast.error("Não é possível mover para sobrepor outra atividade!");
+        toast.error(t("toastMessage17"));
         return prevItems;
       }
 
@@ -150,7 +150,7 @@ export default function RoutineModal({
 
       if (hasOverlap(newItem, prevItems, id)) {
         toast.error(
-          "Não é possível redimensionar para sobrepor outra atividade!"
+            t("toastMessage18")
         );
         // Revert to original duration
         return prevItems.map((item) =>
@@ -175,7 +175,7 @@ export default function RoutineModal({
     if (response.status == 200) {
       setHasToSavePeople(false);
       if(!notClose){
-        toast.success("Rotina e Atividades salvas com sucesso.");
+        toast.success(t("toastMessage19"));
       }
       setIsOpen(notClose ? true : false);
     }
@@ -216,7 +216,7 @@ export default function RoutineModal({
       setIsLoading,
     });
     if (response.status == 200) {
-      toast.success("Atividade deletada com sucesso.");
+      toast.success(t("toastMessage20"));
       setDeleteActivity("");
       setHasToSavePeople(false);
       GetActivityRoutines();

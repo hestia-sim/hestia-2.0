@@ -159,9 +159,10 @@ export default function FinalFile() {
                     }
                     if (totalMinutes !== 1440) {
                         toast.error(
-                            `Não foi possível gerar o arquivo. Dia ${key} não possui 24 horas: Total de ${
-                                totalMinutes / 60
-                            }h`
+                            t("toastMessage23", {
+                                day: key,
+                                hours: totalMinutes / 60,
+                            })
                         );
                         return false;
                     }
@@ -176,7 +177,7 @@ export default function FinalFile() {
         setIsLoading(true);
         try {
             if (!responseData) {
-                toast.error("Houve um problema ao tratar os dados iniciais.");
+                toast.error(t("toastMessage24"));
                 return;
             }
             // 1- ATUADORES
@@ -440,7 +441,7 @@ export default function FinalFile() {
             );
             if (usersWithEmptyDays.length > 0) {
                 toast.error(
-                    "Existe(m) usuário(s) com dias sem atividades na rotina. Verifique antes de gerar o arquivo."
+                    t("toastMessage25")
                 );
                 setIsLoading(false);
                 return;
@@ -574,7 +575,7 @@ export default function FinalFile() {
             !formikPresets.values.days ||
             !formikPresets.values.type
         ) {
-            toast.error("Preencha todos os campos para gerar dados.");
+            toast.error(t("toastMessage26"));
         }
         const response = await BaseRequest({
             method: "GET",

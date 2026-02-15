@@ -93,7 +93,7 @@ export default function ViewParams() {
             setIsLoading,
         });
         if (response.status == 200) {
-            toast.success("Parâmetro deletado com sucesso.");
+            toast.success(t("toastMessage27"));
             FetchData();
         }
     }

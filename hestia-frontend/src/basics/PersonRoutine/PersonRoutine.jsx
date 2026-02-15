@@ -219,7 +219,7 @@ export default function PersonRoutine({
             setIsLoading,
         });
         if (response.status == 200) {
-            toast.success("Pessoa deletada com sucesso do Preset.");
+            toast.success(t("toastMessage4"));
             ResetPreset();
         }
     }
@@ -271,7 +271,7 @@ export default function PersonRoutine({
                         setIsLoading,
                     });
                     if(responseRegisterPreference.status == 201){
-                      toast.success("Prioridade cadastrada com sucesso.")
+                      toast.success(t("toastMessage5"))
                       setPersonPriorityModal(false)
                       setShouldOverlapPriority({ priority: responseRegisterPreference.data.priority, state: true })
                     }
@@ -302,7 +302,7 @@ export default function PersonRoutine({
             onSubmit: async (values) => {
                 if (values.status.length < 1) {
                     toast.error(
-                        "Adicione ao menos uma propriedade para o atuador."
+                        t("toastMessage6")
                     );
                     return;
                 }
@@ -313,7 +313,7 @@ export default function PersonRoutine({
                             a.room.id === formik.values.room.id
                     )
                 ) {
-                    toast.error("Este atuador já foi adicionado.");
+                    toast.error(t("toastMessage7"));
                     return;
                 }
                 const isValid = CheckValidProps(values);

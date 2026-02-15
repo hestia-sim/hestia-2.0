@@ -39,14 +39,14 @@ export default function CreatePreset() {
         validationSchema,
         onSubmit: async (values) => {
             if (rooms.length === 0) {
-                toast.error("Cadastre ao menos um cômodo para continuar!", {
+                toast.error(t("toastMessage28"), {
                     duration: 4000,
                     position: "top-center",
                 });
                 return;
             }
             if (graph.length === 0) {
-                toast.error("Cadastre ao menos um cômodo para continuar!", {
+                toast.error(t("toastMessage29"), {
                     duration: 4000,
                     position: "top-center",
                 });
@@ -65,7 +65,7 @@ export default function CreatePreset() {
                 setIsLoading,
             });
             if (response.status == 201) {
-                toast.success("Preset criado com sucesso");
+                toast.success(t("toastMessage30"));
                 formik.resetForm();
                 formikRooms.resetForm();
                 formikGraph.resetForm();
@@ -89,7 +89,7 @@ export default function CreatePreset() {
         validationSchema: validationSchemaRooms,
         onSubmit: async (values) => {
             if (rooms.some((room) => room.roomName === values.roomName)) {
-                toast.error("Cômodo já adicionado.");
+                toast.error(t("toastMessage31"));
                 return;
             }
             setRooms([...rooms, values]);
@@ -112,7 +112,7 @@ export default function CreatePreset() {
         validationSchema: validationSchemaGraph,
         onSubmit: async (values) => {
             if (values.room1.id == values.room2.id) {
-                toast.error("Os cômodos devem ser diferentes");
+                toast.error(t("toastMessage32"));
                 return;
             }
             if (
@@ -124,7 +124,7 @@ export default function CreatePreset() {
                             connection.room2.id === values.room1.id)
                 )
             ) {
-                toast.error("Ligação entre cômodos já existe.");
+                toast.error(t("toastMessage33"));
                 return;
             }
             setGraph([...graph, values]);
@@ -199,14 +199,14 @@ export default function CreatePreset() {
 
     async function EditPreset(){
       if (rooms.length === 0) {
-          toast.error("Cadastre ao menos um cômodo para continuar!", {
+          toast.error(t("toastMessage28"), {
               duration: 4000,
               position: "top-center",
           });
           return;
       }
       if (graph.length === 0) {
-          toast.error("Cadastre ao menos um cômodo para continuar!", {
+          toast.error(t("toastMessage29"), {
               duration: 4000,
               position: "top-center",
           });
@@ -225,7 +225,7 @@ export default function CreatePreset() {
           setIsLoading,
       });
       if (response.status == 200) {
-          toast.success("Preset editado com sucesso");
+          toast.success(t("toastMessage33"));
       }
 
     }
@@ -332,7 +332,7 @@ export default function CreatePreset() {
                                 doFunction={() => {
                                     if (rooms.length > 0) {
                                         if (graph.some((connection) => connection.room1.id === rooms[rooms.length - 1].roomName.id || connection.room2.id === rooms[rooms.length - 1].roomName.id)) {
-                                            toast.error("Não é possível remover o cômodo, pois ele está associado a um grafo.");
+                                            toast.error(t("toastMessage34"));
                                             return;
                                         }
                                         setRooms(rooms.slice(0, -1));

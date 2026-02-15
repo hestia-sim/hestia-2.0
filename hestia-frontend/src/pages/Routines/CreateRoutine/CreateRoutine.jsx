@@ -190,7 +190,9 @@ export default function CreateRoutine() {
         );
         if (filteredPerson.length > 0) {
           toast.error(
-            `A ${filteredPerson[0].peopleId} já possui uma rotina cadastrada.`,
+            t("toastMessage35",{
+              personName: filteredPerson[0].peopleName
+            }),
             {
               duration: 4000,
               position: "top-center",

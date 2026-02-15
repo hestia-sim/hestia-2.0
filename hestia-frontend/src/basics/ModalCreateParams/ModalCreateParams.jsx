@@ -41,7 +41,7 @@ export default function ModalCreateParams({ isOpen, setIsOpen, type, formik, Fet
             isAuth: true,
           })
           if(response.status == 201){
-            toast.success("Pessoa criada com sucesso.")
+            toast.success(t("toastMessage1"))
             FetchData()
             setIsOpen(false)
           }
@@ -98,7 +98,7 @@ export default function ModalCreateParams({ isOpen, setIsOpen, type, formik, Fet
             isAuth: true,
           })
           if(response.status == 201){
-            toast.success("Cômodo criado com sucesso.")
+            toast.success(t("toastMessage2"))
             FetchData()
             setIsOpen(false)
           }
@@ -168,7 +168,7 @@ export default function ModalCreateParams({ isOpen, setIsOpen, type, formik, Fet
             isAuth: true,
           })
           if(response.status == 201){
-            toast.success("Atividade criada com sucesso.")
+            toast.success(t("toastMessage3"))
             FetchData()
             setIsOpen(false)
           }
