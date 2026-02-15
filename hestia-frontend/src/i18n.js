@@ -124,6 +124,7 @@ const resources = {
             actuators: "Atuadores",
             addPerson: "Adicionar Pessoa",
             removeActuator: "Remover Atuador",
+            removeOtherActivity: "Remover Outra Atividade",
             // View Routine Page
             people: "Pessoas",
             noRoutines: "Sem Rotinas cadastradas",
@@ -140,6 +141,7 @@ const resources = {
             // Create routine
             otherActivity: "Outra Atividade",
             probability: "Probabilidade",
+            probabilityPlaceholder: "Digite a probabilidade",
             addOtherActivity: "Adicionar Outra Atividade",
             switch_led: "Interruptor LED",
             bright_value_v2: "Valor de Brilho v2",
@@ -239,6 +241,8 @@ const resources = {
             howToUseStep7: "Passo 7: Criação de Rotinas",
             howToUseStep7Desc:
                 "Após ter criado o preset e as atividades relacionadas àquele preset, vá em criar rotinas, adicione uma ou mais pessoas e construa a rotina da pessoa. Perceba que cada rotina deve completar 24h diárias.",
+            // final adjustments
+            searchPlaceholder: "Buscar..."
         },
     },
     en: {
@@ -327,6 +331,8 @@ const resources = {
             notPossibleActuator:
                 "It is not possible to create new actuators, as they are fixed objects defined in the original code of the project.",
             viewActuators: "View Actuators",
+            capacity: "Capacity",
+            capacityPlaceholder: "Enter the capacity",
             nameParam: "Parameter Name",
             nameParamPlaceholder: "Enter the parameter name",
             errorValue: "Error Rate",
@@ -351,6 +357,7 @@ const resources = {
             actuators: "Actuators",
             addPerson: "Add Person",
             removeActuator: "Remove Actuator",
+            removeOtherActivity: "Remove Other Activity",
             // View Routine Page
             people: "People",
             noRoutines: "No Routines registered",
@@ -367,6 +374,7 @@ const resources = {
             // Create routine
             otherActivity: "Other Activity",
             probability: "Probability",
+            probabilityPlaceholder: "Enter the probability",
             addOtherActivity: "Add Other Activity",
             switch_led: "LED Switch",
             bright_value_v2: "Brightness Value v2",
@@ -468,6 +476,8 @@ const resources = {
             howToUseStep7: "Step 7: Creating Routines",
             howToUseStep7Desc:
                 "After creating the preset and the activities related to that preset, go to create routines, add one or more people, and build the person's routine. Note that each routine must complete 24 hours per day.",
+            // final adjustments
+            searchPlaceholder: "Search..."
         },
     },
 };

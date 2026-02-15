@@ -333,22 +333,24 @@ export default function AddActivityModal({
     return (
         <form className={s.activityForm} onSubmit={formik.handleSubmit}>
             <h4>{t("addActivity")}</h4>
-            <DropdownField
+            <div className={s.wrapperProps}>
+                <DropdownField
                 type="text"
                 fieldName="preset"
                 formik={formikPresets}
                 value={formikPresets.values.preset}
                 options={presets}
-            />
+                />
+                <Field
+                    type="text"
+                    fieldName="activityPresetName"
+                    formik={formik}
+                    isLogged={true}
+                    value={formik.values.activityPresetName}
+                />
+            </div>
             {formikPresets.values.preset && (
                 <div className={s.wrapperInputs}>
-                    <Field
-                        type="text"
-                        fieldName="activityPresetName"
-                        formik={formik}
-                        isLogged={true}
-                        value={formik.values.activityPresetName}
-                    />
                     <div className={s.wrapperActivityColors}>
                         <h5>{t("activity")}</h5>
                         <DropdownField
@@ -369,33 +371,6 @@ export default function AddActivityModal({
                             <form
                                 className={s.wrapperAddActuators}
                                 onSubmit={formikOtherActivities.handleSubmit}>
-                                {otherActivities.length > 0 &&
-                                    otherActivities.map((activity) => {
-                                        return (
-                                            <div
-                                                className={
-                                                    s.wrapperEachActuatorSaved
-                                                }>
-                                                <Field
-                                                    type="text"
-                                                    fieldName="name"
-                                                    readOnly={true}
-                                                    isLogged={true}
-                                                    value={
-                                                        activity.otherActivity
-                                                            .name
-                                                    }
-                                                />
-                                                <Field
-                                                    type="text"
-                                                    fieldName="probability"
-                                                    readOnly={true}
-                                                    isLogged={true}
-                                                    value={activity.probability}
-                                                />
-                                            </div>
-                                        );
-                                    })}
                                 <div className={s.otherActivityWrapper}>
                                     <DropdownField
                                         type="text"
@@ -421,14 +396,57 @@ export default function AddActivityModal({
                                         }
                                     />
                                 </div>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        formikOtherActivities.handleSubmit()
-                                    }>
-                                    {t("addOtherActivity")}
-                                    <IoMdAdd />
-                                </button>
+                                <div className={s.wrapperActuatorsActions}>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            formikOtherActivities.handleSubmit()
+                                        }>
+                                        {t("addOtherActivity")}
+                                        <IoMdAdd />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={s.removeActuators}
+                                        onClick={() => {
+                                            if (otherActivities.length > 0) {
+                                                setOtherActivities(
+                                                    otherActivities.slice(0, -1)
+                                                );
+                                            }
+                                        }}>
+                                        {t("removeOtherActivity")}
+                                    </button>
+                                </div>
+                                <section className={s.mapGridWrapper}>
+                                    {otherActivities.length > 0 &&
+                                    otherActivities.map((activity) => {
+                                        return (
+                                            <div
+                                                className={
+                                                    s.wrapperEachActuatorSaved
+                                                }>
+                                                <Field
+                                                    type="text"
+                                                    fieldName="name"
+                                                    readOnly={true}
+                                                    isLogged={true}
+                                                    value={
+                                                        activity.otherActivity
+                                                            .name
+                                                    }
+                                                />
+                                                <Field
+                                                    type="text"
+                                                    fieldName="probability"
+                                                    readOnly={true}
+                                                    isLogged={true}
+                                                    value={activity.probability}
+                                                />
+                                            </div>
+                                        );
+                                })}
+                                </section>
                             </form>
                         )}
                     </div>
@@ -447,47 +465,6 @@ export default function AddActivityModal({
                             <form
                                 className={s.wrapperAddActuators}
                                 onSubmit={formikActuators.handleSubmit}>
-                                {actuatorsProps.length > 0 &&
-                                    actuatorsProps.map((actuator) => {
-                                        return (
-                                            <div
-                                                className={
-                                                    s.wrapperEachActuatorSaved
-                                                }>
-                                                <Field
-                                                    type="text"
-                                                    fieldName="name"
-                                                    readOnly={true}
-                                                    isLogged={true}
-                                                    value={
-                                                        actuator.actuator.name
-                                                    }
-                                                />
-                                                {actuator.status.length > 0 &&
-                                                    actuator.status.map(
-                                                        (prop) => {
-                                                            return (
-                                                                <Field
-                                                                    type="text"
-                                                                    fieldName={
-                                                                        prop.name
-                                                                    }
-                                                                    readOnly={
-                                                                        true
-                                                                    }
-                                                                    isLogged={
-                                                                        true
-                                                                    }
-                                                                    value={
-                                                                        prop.value
-                                                                    }
-                                                                />
-                                                            );
-                                                        }
-                                                    )}
-                                            </div>
-                                        );
-                                    })}
                                 <DropdownField
                                     type="text"
                                     fieldName="actuator"
@@ -522,6 +499,49 @@ export default function AddActivityModal({
                                         {t("removeActuator")}
                                     </button>
                                 </div>
+                                <section className={s.mapGridWrapper}>
+                                    {actuatorsProps.length > 0 &&
+                                        actuatorsProps.map((actuator) => {
+                                            return (
+                                                <div
+                                                    className={
+                                                        s.wrapperEachActuatorSaved
+                                                    }>
+                                                    <Field
+                                                        type="text"
+                                                        fieldName="name"
+                                                        readOnly={true}
+                                                        isLogged={true}
+                                                        value={
+                                                            actuator.actuator.name
+                                                        }
+                                                    />
+                                                    {actuator.status.length > 0 &&
+                                                        actuator.status.map(
+                                                            (prop) => {
+                                                                return (
+                                                                    <Field
+                                                                        type="text"
+                                                                        fieldName={
+                                                                            prop.name
+                                                                        }
+                                                                        readOnly={
+                                                                            true
+                                                                        }
+                                                                        isLogged={
+                                                                            true
+                                                                        }
+                                                                        value={
+                                                                            prop.value
+                                                                        }
+                                                                    />
+                                                                );
+                                                            }
+                                                        )}
+                                                </div>
+                                            );
+                                        })}
+                                    </section>
                             </form>
                         )}
                     </div>
