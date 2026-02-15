@@ -294,6 +294,7 @@ const resources = {
             tip9: "Para arquivo final é possível baixar a estrutura JSON do simulador, ou gerar a simulação.",
             tip10: "Para a simulação, selecione o tipo (binário/simples, ou composto/completo), além da quantidade de dias da simulação.",
             tip11: "Garanta que sua rotina possua muitas atividades distintas, com bastante interações em atuadores para uma simulação mais realista.",
+            tip12: "Clique com o botão direito para remover uma atividade. Segure e arrasta na borda para redimensionar a atividade.",
         },
     },
     en: {
@@ -579,6 +580,7 @@ const resources = {
             tip9: "For the final file, it is possible to download the simulator's JSON structure or generate the simulation.",
             tip10: "For the simulation, select the type (binary/simple, or composite/complete), as well as the number of simulation days.",
             tip11: "Ensure your routine has many distinct activities, with plenty of actuator interactions for a more realistic simulation.",
+            tip12: "Click with the right mouse button to remove an activity. Hold and drag the border to resize the activity."
         },
     },
 };

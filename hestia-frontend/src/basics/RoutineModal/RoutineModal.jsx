@@ -27,6 +27,7 @@ export default function RoutineModal({
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activitiesParam, setActivitiesParam] = useState()
+  const tipsEnabled = localStorage.getItem("tipsEnabled") === "true";
 
   async function GetActivityParam() {
     const response = await BaseRequest({
@@ -96,39 +97,40 @@ async function GetActivityRoutines() {
     GetActivityRoutines();
   }, [isActivityModalOpen]);
 
-  async function RegisterRoutineActivity(){
-    const totalDuration = items.reduce((sum, item) => sum + item.duration, 0);
-    if (totalDuration >= 48) {
-      toast.error(t("toastMessage14"));
-      return;
-    }
-    if(formikActivityParam.values.activityPresetParam == "") {
-      toast.error(t("toastMessage15"));
-      return
-    }
-    if(items.length > 0){
-      SaveRoutine(true)
-    }
-    let data = {
-      activityPresetParam: formikActivityParam.values.activityPresetParam.id,
-      presetId: preset.id,
-      dayRoutineId: weekDay.dayId,
-      start: items.length > 0 ? items.reduce((max, item) => Math.max(max, item.start + item.duration), 0) : 0,
-      duration: 1,
-    }
-    const response = await BaseRequest({
-      method: "POST",
-      isAuth: true,
-      url: `routines/registerEachRoutineActivity`,
-      data,
-      setIsLoading,
-    });
-    if(response.status == 201){
-      toast.success(t("toastMessage16"));
-      formikActivityParam.resetForm()
-      GetActivityRoutines()
-    }
+async function RegisterRoutineActivity() {
+  await BaseRequest({
+    method: "PUT",
+    url: `routines/updateRoutineActivities`,
+    data: items, 
+    isAuth: true,
+  });
+
+  const lastEnd = items.length > 0 
+    ? Math.max(...items.map(i => i.start + i.duration)) 
+    : 0;
+
+  let data = {
+    activityPresetParam: formikActivityParam.values.activityPresetParam.id,
+    presetId: preset.id,
+    dayRoutineId: weekDay.dayId,
+    start: lastEnd,
+    duration: 1,
+  };
+
+  const response = await BaseRequest({
+    method: "POST",
+    isAuth: true,
+    url: `routines/registerEachRoutineActivity`,
+    data,
+    setIsLoading,
+  });
+
+  if (response.status == 201) {
+    toast.success(t("toastMessage16"));
+    formikActivityParam.resetForm();
+    GetActivityRoutines(); // Agora o GET trará as posições salvas no passo 1
   }
+}
 
   const handleDragStop = (e, data, id) => {
     setItems((prevItems) => {
@@ -238,6 +240,9 @@ async function GetActivityRoutines() {
               <img src={closeIcon} alt="Close Modal" />
             </button>
           </div>
+          {tipsEnabled && (
+          <p className={"tips"}>ℹ️ {t("tip12")}</p>
+        )}
           <section className={s.titleRoutine}>
             <p>{person?.peopleName}</p>
             <p>{t(weekDay.dayName)}</p>
