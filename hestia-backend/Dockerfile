@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Instala o nodemon para monitorar alterações de arquivos
 RUN npm install -g nodemon
 
 WORKDIR /app
@@ -22,5 +21,4 @@ COPY . .
 
 EXPOSE 3000
 
-# Alterado para usar o nodemon em vez do node direto
-CMD ["nodemon", "index.js"]
+CMD ["node", "index.js"]
