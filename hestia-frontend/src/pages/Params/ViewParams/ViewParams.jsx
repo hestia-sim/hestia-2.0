@@ -44,7 +44,6 @@ export default function ViewParams() {
             isAuth: true,
             setIsLoading,
         });
-        console.log(response);
         if (response.status == 200) {
             setData(response.data[paramType]);
         }
@@ -282,6 +281,7 @@ export default function ViewParams() {
                                 setIsEditing={(status) => setIsEditing(status)}
                                 setDataIsEditing={setDataIsEditing}
                                 setIsActivityModalOpen={setIsActivityModalOpen}
+                                preset={item.type == "activityPresetParam" ? item.presetName : false}
                             />
                         ))}
                 </section>

@@ -245,6 +245,7 @@ const resources = {
             searchPlaceholder: "Buscar...",
             tipsOn: "Dicas Ativadas",
             tipsOff: "Dicas Desativadas",
+            associatedPreset: "Preset Associado",
             // toast messages
             toastMessage1: "Pessoa criada com sucesso.",
             toastMessage2: "Cômodo criado com sucesso.",
@@ -287,6 +288,8 @@ const resources = {
             tip3: "Cômodos são parâmetros GERAIS, criados para serem utilizados em diversos Presets.",
             tip4: "Não é possível criar ou editar atuadores, pois são elementos criados automaticamente pelo simulador HESTIA.",
             tip5: "Atividades com Preset são parâmetros ESPECÍFICOS, criados para serem utilizados ESPECIFICAMENTE naquele Preset.",
+            tip6: "Presets são ambientes (Casa, Apartamento, Studio...) que podem ser reutilizados em diversas rotinas.",
+            tip7: "O grafo dos cômodos é uma representação visual das relações entre os cômodos do preset, medido em distância temporal. (5 -> 5 segundos de um cômodo a outro)"
         },
     },
     en: {
@@ -524,6 +527,7 @@ const resources = {
             searchPlaceholder: "Search...",
             tipsOn: "Tips Activated",
             tipsOff: "Tips Disabled",
+            associatedPreset: "Associated Preset",
             // toast messages
             toastMessage1: "Person created successfully.",
             toastMessage2: "Room created successfully.",

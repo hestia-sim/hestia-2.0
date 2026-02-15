@@ -85,7 +85,7 @@ export async function BaseRequest({
       }
     } else {
       // Something happened in setting up the request that triggered an Error
-      toast.warning("Algum erro ocorreu e não pôde ser tratado.",{
+      toast.error("Algum erro ocorreu e não pôde ser tratado.",{
         toastId: "unhandledError",
       });
     } 

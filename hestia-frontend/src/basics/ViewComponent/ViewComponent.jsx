@@ -22,7 +22,8 @@ export default function ViewComponent({
     DeleteData = false,
     setIsEditing=false,
     setDataIsEditing=false,
-    setIsActivityModalOpen=false
+    setIsActivityModalOpen=false,
+    preset=false
 }) {
     const { t } = useTranslation();
     const columns = 2;
@@ -31,7 +32,6 @@ export default function ViewComponent({
     const isEvenRow = row % 2 === 0;
 
     const isColorA = (isEvenRow && col === 0) || (!isEvenRow && col === 1);
-
     const navigate = useNavigate();
 
     return (
@@ -58,6 +58,11 @@ export default function ViewComponent({
                 {room.length > 0 && (
                     <p>
                         {t("rooms")}: {room.join(", ")}
+                    </p>
+                )}
+                {preset && (
+                    <p>
+                        {t("associatedPreset")}: {preset}
                     </p>
                 )}
                 {actuatorSpec.length > 0 &&

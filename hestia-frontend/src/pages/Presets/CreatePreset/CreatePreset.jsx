@@ -229,6 +229,7 @@ export default function CreatePreset() {
       }
 
     }
+    const tipsEnabled = localStorage.getItem("tipsEnabled") === "true";
 
     return (
         <main className={s.wrapperCreatePreset}>
@@ -239,6 +240,7 @@ export default function CreatePreset() {
             <Header />
             <section className={s.hestiaInfoWrapper}>
                 <h1>{t("createHousePreset")}</h1>
+                {tipsEnabled && <p className={"tips"}>ℹ️ {t("tip6")}</p>}
                 <div className={s.wrapperInternForm}>
                     <form>
                         <Field
@@ -347,6 +349,9 @@ export default function CreatePreset() {
                             className={s.wrapperForm}
                             onSubmit={formikGraph.handleSubmit}>
                             <h2>{t("graph")}</h2>
+                            <div style={{ width: "100%", textAlign: "left", justifyContent: "flex-start" }}>
+                                {tipsEnabled && <p className={"tips"}>ℹ️ {t("tip7")}</p>}
+                            </div>
                             <section className={graph.length > 0 && s.wrapperListRooms}>
                                 {graph &&
                                 graph.length > 0 &&
