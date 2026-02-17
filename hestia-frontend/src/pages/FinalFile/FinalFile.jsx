@@ -551,11 +551,12 @@ export default function FinalFile() {
                             finalDataPreferences[peopleName].preferencia[comodo][atuador][
                                 key
                             ] = value;
-                            finalDataPreferences[peopleName].nome = peopleName
-                            finalDataPreferences[peopleName].prioridade = priority
+                            
                         }
                     });
                 });
+                finalDataPreferences[peopleName].nome = peopleName
+                finalDataPreferences[peopleName].prioridade = priority
             }
             setPreferenceData(
                 Object.entries(finalDataPreferences).map(([name, data]) => ({
