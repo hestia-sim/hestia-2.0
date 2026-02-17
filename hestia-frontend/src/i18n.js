@@ -246,6 +246,7 @@ const resources = {
             tipsOn: "Dicas Ativadas",
             tipsOff: "Dicas Desativadas",
             associatedPreset: "Preset Associado",
+            priorityNotSet: "É necessário definir uma prioridade para a pessoa antes de continuar.",
             // toast messages
             toastMessage1: "Pessoa criada com sucesso.",
             toastMessage2: "Cômodo criado com sucesso.",
@@ -533,6 +534,7 @@ const resources = {
             tipsOn: "Tips Activated",
             tipsOff: "Tips Disabled",
             associatedPreset: "Associated Preset",
+            priorityNotSet: "You must set a priority for a person before continuing.",
             // toast messages
             toastMessage1: "Person created successfully.",
             toastMessage2: "Room created successfully.",

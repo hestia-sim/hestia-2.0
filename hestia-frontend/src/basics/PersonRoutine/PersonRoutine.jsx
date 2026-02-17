@@ -30,6 +30,7 @@ export default function PersonRoutine({
     const [isLoading, setIsLoading] = useState(false);
     const [personPriorityModal, setPersonPriorityModal] = useState(false);
     const [peopleRoutinePreset, setPeopleRoutinePreset] = useState();
+    const [hasPriority, setHasPriority] = useState(false);
     const [shouldOverlapPriority, setShouldOverlapPriority] = useState({
       state: false,
       priority: 0
@@ -279,6 +280,7 @@ const hasIncompleteDay = days.some(
                       toast.success(t("toastMessage5"))
                       setPersonPriorityModal(false)
                       setShouldOverlapPriority({ priority: responseRegisterPreference.data.priority, state: true })
+                      setHasPriority(true)
                     }
                 } catch (e) {}
             },
@@ -477,12 +479,13 @@ const hasIncompleteDay = days.some(
                     isLoading={isLoading}
                 />
             </div>
-            {hasIncompleteDay && (
+            {(hasIncompleteDay && hasPriority) && (
                 <div className={s.incompleteMessage}>
                     <p>⚠️ {t("someDayIsIncomplete")}</p>
                 </div>
             )}
-            <div>
+            {hasPriority ?
+                <div>
                 <EachDay day={person.monday} />
                 <EachDay day={person.tuesday} />
                 <EachDay day={person.wednesday} />
@@ -491,6 +494,12 @@ const hasIncompleteDay = days.some(
                 <EachDay day={person.saturday} />
                 <EachDay day={person.sunday} />
             </div>
+                :
+                <div className={s.incompleteMessage}>
+                    <p>⚠️ {t("priorityNotSet")}</p>
+                </div>
+            }
+
         </section>
     );
 }
