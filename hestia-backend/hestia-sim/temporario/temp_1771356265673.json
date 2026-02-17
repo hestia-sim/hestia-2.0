@@ -1,0 +1,153 @@
+{
+  "ATUADORES": [
+    "LAMPADA",
+    "CAFETEIRA",
+    "PLUG",
+    "SOM",
+    "AR_CONDICIONADO",
+    "TV",
+    "SENSOR_PRESENCA"
+  ],
+  "COMODOS": {
+    "rua": {
+      "nome": "RUA",
+      "atuadores": [],
+      "ocupacao_maxima": 10
+    },
+    "cozinha": {
+      "nome": "COZINHA",
+      "atuadores": [
+        "CAFETEIRA",
+        "AR_CONDICIONADO",
+        "SENSOR_PRESENCA",
+        "SOM",
+        "PLUG",
+        "TV",
+        "LAMPADA"
+      ],
+      "ocupacao_maxima": 2
+    },
+    "quarto": {
+      "nome": "QUARTO",
+      "atuadores": [
+        "LAMPADA"
+      ],
+      "ocupacao_maxima": 1
+    }
+  },
+  "GRAFO_COMODOS": [
+    [
+      "RUA",
+      "COZINHA",
+      5
+    ],
+    [
+      "QUARTO",
+      "COZINHA",
+      1
+    ]
+  ],
+  "ATIVIDADES": {
+    "IR_AO_BANHEIRO_QUARTO_1440MIN0": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN0",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN1": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN1",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN2": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN2",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN3": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN3",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN4": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN4",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN5": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN5",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    },
+    "IR_AO_BANHEIRO_QUARTO_1440MIN6": {
+      "nome": "IR_AO_BANHEIRO_QUARTO_1440MIN6",
+      "inicio_ocorrencia": null,
+      "fim_ocorrencia": null,
+      "duracao": 1440,
+      "taxa_erro": 0.02,
+      "local_atividade": "QUARTO",
+      "atividades_associadas": {},
+      "lista_atuadores_atividade": {}
+    }
+  },
+  "USUARIOS": {
+    "asfasf": {
+      "prioridade": 1,
+      "comodo_atual": "RUA",
+      "preferencia": {},
+      "rotina_semana": [
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ],
+        [
+          "IR_AO_BANHEIRO_QUARTO_1440MIN0"
+        ]
+      ]
+    }
+  },
+  "AUTOMACAO": []
+}

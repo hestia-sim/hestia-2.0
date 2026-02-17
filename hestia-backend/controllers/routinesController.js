@@ -4,17 +4,22 @@ const ActivityPresetParam = require('../models/ActivityPresetParam');
 const { HousePresets } = require('../models');
 const PeoplePriority = require('../models/PeoplePriority');
 
-function formatTime(blocks) {
-  const totalMinutes = blocks * 30;
+function formatTime(totalMinutes) {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+  
+  // Removemos o % 24 para permitir que 1440 min vire "24:00"
+  const formattedHours = String(hours).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  
+  return `${formattedHours}:${formattedMinutes}:00`;
 }
 
 function deformatTime(time) {
+  if (!time) return 0;
   const [hours, minutes] = time.split(':').map(Number);
-  const totalMinutes = hours * 60 + minutes;
-  return Math.floor(totalMinutes / 30);
+  // Se receber "24:00", retornará 1440 corretamente
+  return (hours * 60) + minutes;
 }
 
 exports.registerPeopleDayRoutines = async (req, res) => {
