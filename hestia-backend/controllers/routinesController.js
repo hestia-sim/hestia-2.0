@@ -405,39 +405,53 @@ exports.getAllPeopleRoutines = async (req, res) => {
     const { page = 1 } = req.query;
     const limit = 6;
     const offset = (page - 1) * limit;
+    
+    const userId = req.users.id; 
 
-    const count = await PeopleRoutines.count();
+    const count = await PeopleRoutines.count({
+      include: [{
+        model: HousePresets,
+        where: { userId: userId },
+        required: true 
+      }]
+    });
 
     const peopleRoutines = await PeopleRoutines.findAll({
       limit: parseInt(limit),
-      offset: parseInt(offset)
+      offset: parseInt(offset),
+      include: [{
+        model: HousePresets,
+        where: { userId: userId },
+        required: true
+      }]
     });
 
     const finalPeopleRoutines = await Promise.all(
       peopleRoutines.map(async (element) => {
-      let housePresetName = null;
-      let peopleName = null;
+        let housePresetName = null;
+        let peopleName = null;
 
-      if (element.housePresetId) {
-        const housePreset = await HousePresets.findOne({ where: { id: element.housePresetId } });
-        housePresetName = housePreset ? housePreset.name : null;
-      }
-      if (element.peopleId) {
-        const person = await People.findOne({ where: { id: element.peopleId } });
-        peopleName = person ? person.name : null;
-      }
+        if (element.housePresetId) {
+          const housePreset = element.HousePreset || await HousePresets.findOne({ where: { id: element.housePresetId } });
+          housePresetName = housePreset ? housePreset.name : null;
+        }
 
-      return {
-        ...element.toJSON(),
-        housePreset: housePresetName,
-        peopleName: peopleName
-      };
+        if (element.peopleId) {
+          const person = await People.findOne({ where: { id: element.peopleId } });
+          peopleName = person ? person.name : null;
+        }
+
+        return {
+          ...element.toJSON(),
+          housePreset: housePresetName,
+          peopleName: peopleName
+        };
       })
     );
-    res.status(200).json({ peopleRoutines: finalPeopleRoutines, count });
 
-    res.status(200).json({ peopleRoutines, count });
+    return res.status(200).json({ peopleRoutines: finalPeopleRoutines, count });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
