@@ -297,13 +297,13 @@
 
 .hours {
   display: flex;
-  width: calc(48 * 50px); // ou 2400px
+  width: calc(96 * 50px); // ou 2400px
   background: var(--secondary-color);
   color: var(--tertiary-color);
 }
 
 .events {
-  width: calc(48 * 50px); // mesma largura que .hours
+  width: calc(96 * 50px); // mesma largura que .hours
   position: relative;
   background: var(--secondary-color);
   margin-top: 10px;

@@ -147,65 +147,70 @@ export default function PersonRoutine({
     };
 
     const EachDay = ({ day }) => {
-        const sortedRoutine = [...day.routine].sort(
-            (a, b) => a.start - b.start
-        );
-        const totalDuration = sortedRoutine.reduce(
-            (sum, act) => sum + act.duration,
-            0
-        );
-        const remainingDuration = 48 - totalDuration;
-        const isIncomplete = totalDuration < 48;
+    const sortedRoutine = [...day.routine].sort(
+        (a, b) => a.start - b.start
+    );
+    
+    const totalDuration = sortedRoutine.reduce(
+        (sum, act) => sum + act.duration,
+        0
+    );
 
-        return (
-            <div className={s.eachDayWrapper}>
-                <div className={s.dayName}>
-                    <h4 className={isIncomplete ? s.incompleteDay : ""}>
-                        {t(day.dayName)}
-                    </h4>
-                    <div className={s.internActionsButton}>
-                        <button onClick={() => openModal(day)}>
-                            {day.routine.length > 0 ? (
-                                <MdModeEdit />
-                            ) : (
-                                <IoMdAdd />
-                            )}
-                        </button>
-                    </div>
-                </div>
+    const totalBlocksInDay = 1440; 
+    const remainingDuration = totalBlocksInDay - totalDuration;
+    const isIncomplete = totalDuration < totalBlocksInDay;
 
-                <div className={s.routineActions}>
-                    {sortedRoutine.map((activity) => {
-                        const widthPercentage = (activity.duration / 48) * 100;
-                        return (
-                            <div
-                                key={activity.id}
-                                className={s.activityBlock}
-                                title={activity.title}
-                                style={{
-                                    width: `${widthPercentage}%`,
-                                    backgroundColor: activity.color,
-                                }}
-                            />
-                        );
-                    })}
-
-                    {remainingDuration > 0 && (
-                        <div
-                            className={s.activityBlock}
-                            style={{
-                                width: `${(remainingDuration / 48) * 100}%`,
-                                backgroundColor: "#ccc",
-                                opacity: 0.5,
-                                cursor: "not-allowed",
-                            }}
-                            title={`${remainingDuration * 30}min livres`}
-                        />
-                    )}
+    return (
+        <div className={s.eachDayWrapper}>
+            <div className={s.dayName}>
+                <h4 className={isIncomplete ? s.incompleteDay : ""}>
+                    {t(day.dayName)}
+                </h4>
+                <div className={s.internActionsButton}>
+                    <button onClick={() => openModal(day)}>
+                        {day.routine.length > 0 ? (
+                            <MdModeEdit />
+                        ) : (
+                            <IoMdAdd />
+                        )}
+                    </button>
                 </div>
             </div>
-        );
-    };
+
+            <div className={s.routineActions}>
+                {sortedRoutine.map((activity) => {
+                    const widthPercentage = (activity.duration / totalBlocksInDay) * 100;
+                    return (
+                        <div
+                            key={activity.id}
+                            className={s.activityBlock}
+                            title={activity.title}
+                            style={{
+                                width: `${widthPercentage}%`,
+                                backgroundColor: activity.color,
+                            }}
+                        />
+                    );
+                })}
+
+                {remainingDuration > 0 && (
+                    <div
+                        className={s.activityBlock}
+                        style={{
+                            // ALTERAÇÃO: De 48 para 96 no cálculo da largura
+                            width: `${(remainingDuration / totalBlocksInDay) * 100}%`,
+                            backgroundColor: "#ccc",
+                            opacity: 0.5,
+                            cursor: "not-allowed",
+                        }}
+                        // ALTERAÇÃO: De 30min para 15min no texto informativo
+                        title={`${remainingDuration * 15}min livres`}
+                    />
+                )}
+            </div>
+        </div>
+    );
+};
 
     async function DeletePersonFromPreset() {
         const response = await BaseRequest({
@@ -234,9 +239,9 @@ export default function PersonRoutine({
         person.sunday,
     ];
 
-    const hasIncompleteDay = days.some(
-        (day) => day.routine.reduce((sum, act) => sum + act.duration, 0) < 48
-    );
+const hasIncompleteDay = days.some(
+    (day) => day.routine.reduce((sum, act) => sum + act.duration, 0) < 96
+);
 
     const PeoplePreferences = () => {
         if (!personPriorityModal) return;
