@@ -158,7 +158,6 @@ async function RegisterRoutineActivity() {
     let newDurationInMinutes = Math.round(size.width / minPixel);
     const currentItem = prevItems.find((item) => item.id === id);
     
-    // Trava para não passar de 24h (1440 min) no total
     if (currentItem.start + newDurationInMinutes > 1440) {
       newDurationInMinutes = 1440 - currentItem.start;
     }
@@ -331,6 +330,7 @@ async function RegisterRoutineActivity() {
                           className={`${s.eventBox} drag-handle`}
                           style={{ background: item.color }}>
                           <p>{item.title}</p>
+                          <p className={s.duration}>{item.duration}m</p>
                         </div>
                       </ResizableBox>
                     </div>

@@ -326,7 +326,9 @@
   justify-content: center;
   position: relative;
   cursor: move;
-  users-select: none;
+  .duration{
+    display: none;
+  }
   p{
     min-width: 30px;
     @include font-regular-3;
@@ -334,6 +336,31 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
+  }
+}
+
+.eventBox:hover {
+  background-color: black !important;
+  color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: move;
+  .duration{
+    display: unset;
+  }
+  p {
+    width: 100%;
+    line-height: 16px !important;
+    @include font-bold-3;
+    overflow: visible;
+    text-overflow: unset;
+    text-align: center;
+    background: none;
+    color: white;
   }
 }
 
