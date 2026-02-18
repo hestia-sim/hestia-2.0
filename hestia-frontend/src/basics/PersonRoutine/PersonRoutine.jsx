@@ -49,6 +49,9 @@ export default function PersonRoutine({
                 (item) => item.peopleName === person.peopleName
             );
             setPeopleRoutinePreset(foundPerson);
+            if(foundPerson && foundPerson.priority) {
+              setHasPriority(true);
+            }
         }
     }
     useEffect(() => {
