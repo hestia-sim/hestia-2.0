@@ -48,8 +48,10 @@ export default function RoutineModal({
   // items array
   const [items, setItems] = useState([]);
   // items size
-  const gridSize = 50; // 30m = 50px
-  const timeSlots = 48; // 24h * 2
+  const slotMinutes = 15; // A escala visual continua 15m
+  const gridSize = 50;    // Cada slot de 15m tem 50px
+  const minPixel = gridSize / slotMinutes; // Valor de 1 minuto em pixels (~3.33px)
+  const timeSlots = 96;   // 24h * 4
   const rowHeight = 50;
 
   const validationSchemaActivityParam = Yup.object().shape({
@@ -114,9 +116,8 @@ async function RegisterRoutineActivity() {
     presetId: preset.id,
     dayRoutineId: weekDay.dayId,
     start: lastEnd,
-    duration: 1,
+    duration: 10,
   };
-
   const response = await BaseRequest({
     method: "POST",
     isAuth: true,
@@ -128,15 +129,15 @@ async function RegisterRoutineActivity() {
   if (response.status == 201) {
     toast.success(t("toastMessage16"));
     formikActivityParam.resetForm();
-    GetActivityRoutines(); // Agora o GET trará as posições salvas no passo 1
+    GetActivityRoutines();
   }
 }
 
   const handleDragStop = (e, data, id) => {
     setItems((prevItems) => {
-      const newStart = Math.max(0, Math.round(data.x / gridSize));
+      const newStartInMinutes = Math.max(0, Math.round(data.x / minPixel));
       const currentItem = prevItems.find((item) => item.id === id);
-      const newItem = { ...currentItem, start: newStart };
+      const newItem = { ...currentItem, start: newStartInMinutes };
 
       if (hasOverlap(newItem, prevItems, id)) {
         toast.error(t("toastMessage17"));
@@ -144,29 +145,29 @@ async function RegisterRoutineActivity() {
       }
 
       return prevItems.map((item) =>
-        item.id === id ? { ...item, start: newStart } : item
+        item.id === id ? { ...item, start: newStartInMinutes } : item
       );
     });
   };
 
   const handleResizeStop = (_, { size }, id) => {
     setItems((prevItems) => {
-      const newDuration = Math.max(1, Math.round(size.width / gridSize));
-      const currentItem = prevItems.find((item) => item.id === id);
-      const newItem = { ...currentItem, duration: newDuration };
+    let newDurationInMinutes = Math.round(size.width / minPixel);
+    const currentItem = prevItems.find((item) => item.id === id);
+    
+    if (currentItem.start + newDurationInMinutes > 1440) {
+      newDurationInMinutes = 1440 - currentItem.start;
+    }
+
+    const newItem = { ...currentItem, duration: newDurationInMinutes };
 
       if (hasOverlap(newItem, prevItems, id)) {
-        toast.error(
-            t("toastMessage18")
-        );
-        // Revert to original duration
-        return prevItems.map((item) =>
-          item.id === id ? { ...item, duration: currentItem.duration } : item
-        );
+        toast.error(t("toastMessage18"));
+        GetActivityRoutines()
       }
 
       return prevItems.map((item) =>
-        item.id === id ? { ...item, duration: newDuration } : item
+        item.id === id ? { ...item, duration: newDurationInMinutes } : item
       );
     });
   };
@@ -269,18 +270,21 @@ async function RegisterRoutineActivity() {
         {items.length > 0 && (
           <>
             <div className={s.scrollContainer}>
-              {/* Hours */}
-              <div className={s.hours}>
-                {Array.from({ length: timeSlots }, (_, i) => {
-                  const hour = Math.floor(i / 2);
-                  const minute = i % 2 === 0 ? "00" : "30";
-                  return (
-                    <div key={i} className={s.hour} style={{ width: gridSize }}>
-                      {hour}:{minute}
-                    </div>
-                  );
-                })}
-              </div>
+            {/* Hours */}
+            <div className={s.hours}>
+              {Array.from({ length: timeSlots }, (_, i) => {
+                const hour = Math.floor(i / 4); // Divide por 4 para obter a hora cheia
+                const minutesArray = ["00", "15", "30", "45"];
+                const minute = minutesArray[i % 4]; // Pega o resto da divisão para o minuto
+                const displayTime = `${hour.toString().padStart(2, '0')}:${minute}`;
+                
+                return (
+                  <div key={i} className={s.hour} style={{ width: gridSize }}>
+                    {minute === "00" ? <strong>{displayTime}</strong> : minute}
+                  </div>
+                );
+              })}
+            </div>
               {/* Activities */}
               <div
                 style={{ height: `${items.length * 50}px` }}
@@ -290,28 +294,22 @@ async function RegisterRoutineActivity() {
                     key={item.id}
                     axis="x"
                     bounds="parent"
-                    grid={[gridSize, gridSize]}
-                    position={{ x: item.start * gridSize, y: 0 }}
+                    // IMPORTANTE: grid agora é [minPixel, minPixel] para permitir mover de 1 em 1 min
+                    grid={[minPixel, minPixel]} 
+                    position={{ x: item.start * minPixel, y: 0 }}
                     onStop={(e, data) => handleDragStop(e, data, item.id)}
                     handle=".drag-handle">
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: index * rowHeight,
-                        left: 0,
-                      }}>
+                    <div style={{ position: "absolute", top: index * rowHeight, left: 0 }}>
                       <ResizableBox
-                        width={item.duration * gridSize}
+                        width={item.duration * minPixel}
                         height={rowHeight - 10}
-                        minConstraints={[gridSize, rowHeight - 10]}
+                        minConstraints={[minPixel, rowHeight - 10]} 
                         maxConstraints={[
-                          (timeSlots - item.start) * gridSize,
+                          (1440 - item.start) * minPixel, // Agora permite chegar em 1440
                           rowHeight - 10,
                         ]}
                         axis="x"
-                        onResizeStop={(e, data) =>
-                          handleResizeStop(e, data, item.id)
-                        }
+                        onResizeStop={(e, data) => handleResizeStop(e, data, item.id)}
                         onContextMenu={(e) => {
                           e.preventDefault();
                           setDeleteActivity(item);
@@ -327,6 +325,7 @@ async function RegisterRoutineActivity() {
                           className={`${s.eventBox} drag-handle`}
                           style={{ background: item.color }}>
                           <p>{item.title}</p>
+                          <p className={s.duration}>{item.duration}m</p>
                         </div>
                       </ResizableBox>
                     </div>

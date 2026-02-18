@@ -4,17 +4,22 @@ const ActivityPresetParam = require('../models/ActivityPresetParam');
 const { HousePresets } = require('../models');
 const PeoplePriority = require('../models/PeoplePriority');
 
-function formatTime(blocks) {
-  const totalMinutes = blocks * 30;
+function formatTime(totalMinutes) {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+  
+  // Removemos o % 24 para permitir que 1440 min vire "24:00"
+  const formattedHours = String(hours).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  
+  return `${formattedHours}:${formattedMinutes}:00`;
 }
 
 function deformatTime(time) {
+  if (!time) return 0;
   const [hours, minutes] = time.split(':').map(Number);
-  const totalMinutes = hours * 60 + minutes;
-  return Math.floor(totalMinutes / 30);
+  // Se receber "24:00", retornará 1440 corretamente
+  return (hours * 60) + minutes;
 }
 
 exports.registerPeopleDayRoutines = async (req, res) => {
@@ -400,39 +405,53 @@ exports.getAllPeopleRoutines = async (req, res) => {
     const { page = 1 } = req.query;
     const limit = 6;
     const offset = (page - 1) * limit;
+    
+    const userId = req.users.id; 
 
-    const count = await PeopleRoutines.count();
+    const count = await PeopleRoutines.count({
+      include: [{
+        model: HousePresets,
+        where: { userId: userId },
+        required: true 
+      }]
+    });
 
     const peopleRoutines = await PeopleRoutines.findAll({
       limit: parseInt(limit),
-      offset: parseInt(offset)
+      offset: parseInt(offset),
+      include: [{
+        model: HousePresets,
+        where: { userId: userId },
+        required: true
+      }]
     });
 
     const finalPeopleRoutines = await Promise.all(
       peopleRoutines.map(async (element) => {
-      let housePresetName = null;
-      let peopleName = null;
+        let housePresetName = null;
+        let peopleName = null;
 
-      if (element.housePresetId) {
-        const housePreset = await HousePresets.findOne({ where: { id: element.housePresetId } });
-        housePresetName = housePreset ? housePreset.name : null;
-      }
-      if (element.peopleId) {
-        const person = await People.findOne({ where: { id: element.peopleId } });
-        peopleName = person ? person.name : null;
-      }
+        if (element.housePresetId) {
+          const housePreset = element.HousePreset || await HousePresets.findOne({ where: { id: element.housePresetId } });
+          housePresetName = housePreset ? housePreset.name : null;
+        }
 
-      return {
-        ...element.toJSON(),
-        housePreset: housePresetName,
-        peopleName: peopleName
-      };
+        if (element.peopleId) {
+          const person = await People.findOne({ where: { id: element.peopleId } });
+          peopleName = person ? person.name : null;
+        }
+
+        return {
+          ...element.toJSON(),
+          housePreset: housePresetName,
+          peopleName: peopleName
+        };
       })
     );
-    res.status(200).json({ peopleRoutines: finalPeopleRoutines, count });
 
-    res.status(200).json({ peopleRoutines, count });
+    return res.status(200).json({ peopleRoutines: finalPeopleRoutines, count });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
