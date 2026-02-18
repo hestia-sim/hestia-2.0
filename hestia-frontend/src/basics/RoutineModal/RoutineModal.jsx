@@ -118,7 +118,6 @@ async function RegisterRoutineActivity() {
     start: lastEnd,
     duration: 10,
   };
-  console.log(data)
   const response = await BaseRequest({
     method: "POST",
     isAuth: true,
@@ -128,16 +127,14 @@ async function RegisterRoutineActivity() {
   });
 
   if (response.status == 201) {
-    console.log(data)
     toast.success(t("toastMessage16"));
     formikActivityParam.resetForm();
-    GetActivityRoutines(); // Agora o GET trará as posições salvas no passo 1
+    GetActivityRoutines();
   }
 }
 
   const handleDragStop = (e, data, id) => {
     setItems((prevItems) => {
-      // Agora calculamos quantos "minutos" ele andou
       const newStartInMinutes = Math.max(0, Math.round(data.x / minPixel));
       const currentItem = prevItems.find((item) => item.id === id);
       const newItem = { ...currentItem, start: newStartInMinutes };
@@ -166,7 +163,7 @@ async function RegisterRoutineActivity() {
 
       if (hasOverlap(newItem, prevItems, id)) {
         toast.error(t("toastMessage18"));
-        return prevItems;
+        GetActivityRoutines()
       }
 
       return prevItems.map((item) =>
@@ -279,8 +276,6 @@ async function RegisterRoutineActivity() {
                 const hour = Math.floor(i / 4); // Divide por 4 para obter a hora cheia
                 const minutesArray = ["00", "15", "30", "45"];
                 const minute = minutesArray[i % 4]; // Pega o resto da divisão para o minuto
-                
-                // Opcional: Mostrar o texto da hora apenas no :00 para não poluir visualmente
                 const displayTime = `${hour.toString().padStart(2, '0')}:${minute}`;
                 
                 return (
