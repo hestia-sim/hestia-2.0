@@ -1,9 +1,11 @@
-// Components
-// Images
-// Imports
 import { useTranslation } from 'react-i18next';
-// Styles
+import { useEffect } from 'react';
 import s from './Field.module.scss'
+
+function getRandomColor() {
+  // Gera uma cor hexadecimal aleatória
+  return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+}
 
 export default function Field({
   type = "text",
@@ -16,6 +18,13 @@ export default function Field({
   isSearch = false,
 }) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (type === "color" && formik && !formik.values[fieldName]) {
+      const randomColor = getRandomColor();
+      formik.setFieldValue(fieldName, randomColor);
+    }
+  }, [type, fieldName, formik]);
 
   if(isSearch){
     return(
